@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mon cycle</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#a8325a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mon cycle">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap">
+<style>
+:root{--bg:#f6f5fa;--surface:#fff;--ink:#1d1b2e;--mute:#6b6880;--line:#e3e1ee;
+--men:#a8325a;--fol:#2f8a74;--ovu:#c98a12;--lut:#5a56b8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#14131f;--surface:#1e1c2e;--ink:#f0eefa;--mute:#a09cb8;--line:#33304a;--men:#e0658d;--fol:#4fc3a6;--ovu:#e8b43e;--lut:#8d89e8}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#14131f;--surface:#1e1c2e;--ink:#f0eefa;--mute:#a09cb8;--line:#33304a;--men:#e0658d;--fol:#4fc3a6;--ovu:#e8b43e;--lut:#8d89e8}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:480px;margin:0 auto;padding:20px 18px 40px}
+h1{font-size:22px;font-weight:800;margin:0 0 16px;letter-spacing:-.01em}
+h2{font-size:18px;font-weight:600;margin:0 0 6px}
+.dial{display:block;width:100%;max-width:300px;margin:0 auto}
+.center{text-align:center}
+.day{font-size:44px;font-weight:800;line-height:1}
+.sub{color:var(--mute);font-size:14px}
+.tabs{display:flex;gap:6px;margin:20px 0 14px}
+.tabs button{flex:1;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 2px;font-family:inherit;font-weight:600;font-size:12px;line-height:1.2;cursor:pointer}
+.tabs button[aria-selected="true"]{color:#fff;border-color:transparent}
+.tabs button:focus-visible,.btn:focus-visible,input:focus-visible{outline:3px solid var(--lut);outline-offset:2px}
+.panel{background:var(--surface);border-radius:16px;padding:18px;border-left:6px solid var(--c)}
+.panel p{margin:0 0 14px}
+.panel h3{font-size:15px;margin:14px 0 6px}
+.panel ul{margin:0;padding-left:20px}
+.panel li{margin:3px 0}
+.btn{display:block;width:100%;margin-top:14px;padding:13px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-family:inherit;font-weight:600;font-size:15px;cursor:pointer}
+.btn.main{background:var(--men);border-color:var(--men);color:#fff}
+form label{display:block;margin:14px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:11px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-family:inherit;font-size:16px}
+.note{font-size:13px;color:var(--mute);margin-top:22px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 14px}
+.chip{border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 12px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip:focus-visible,select:focus-visible{outline:3px solid var(--lut);outline-offset:2px}
+.log{background:var(--surface);border-radius:16px;padding:18px;margin-top:16px}
+.log h2{margin-bottom:10px}.log h3{font-size:15px;margin:12px 0 0}
+.hist{list-style:none;padding:0;margin:8px 0 0;font-size:14px}.hist li{padding:7px 0;border-top:1px solid var(--line)}
+.nav{display:flex;gap:8px;margin-bottom:16px}
+.nav button{flex:1;padding:10px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.nav button[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.nav button:focus-visible{outline:3px solid var(--lut);outline-offset:2px}
+.dish{background:var(--surface);border-radius:16px;padding:16px;margin-bottom:12px;border-left:6px solid var(--c)}
+.dish h2{margin:0 0 2px}.dish .tag{font-size:12px;color:var(--mute);margin:0 0 8px}
+.dish h3{font-size:14px;margin:10px 0 4px}.dish ul{margin:0;padding-left:20px}.dish p{margin:0}
+textarea{resize:vertical}
+.row{display:flex;gap:8px}.row .btn{margin-top:12px;font-size:14px;padding:10px}
+.addrow{display:flex;gap:8px;margin-bottom:12px}.addrow .btn{width:auto;margin-top:0;padding:0 18px}
+.shop{list-style:none;padding:0;margin:0 0 6px}
+.shop li{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--surface);border-radius:12px;padding:10px 12px;margin-bottom:6px}
+.shop label{display:flex;align-items:center;gap:10px;flex:1;cursor:pointer}
+.shop input[type=checkbox]{width:22px;height:22px;padding:0;margin:0;accent-color:var(--ink);flex:none}
+.shop .done span{text-decoration:line-through;color:var(--mute)}
+.shop .x{border:0;background:none;color:var(--mute);font-size:24px;line-height:1;padding:2px 8px;cursor:pointer}
+.shop .x:focus-visible,.shop input:focus-visible,.row .btn:focus-visible{outline:3px solid var(--lut);outline-offset:2px}
+.extra{margin-top:14px;padding:10px 12px;border-radius:10px;background:var(--bg);font-size:15px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const KEY="cycle-v1";
+const PH=[
+{id:"men",n:"Règles",c:"var(--men)",en:"Énergie basse : écoutez votre corps.",
+ sport:["Marche tranquille","Yoga doux, étirements","Natation douce","Repos si besoin, sans culpabilité"],
+ food:["Aliments riches en fer : lentilles, épinards, viande rouge","Vitamine C (agrumes, kiwi) pour mieux absorber le fer","Magnésium : chocolat noir, amandes","Gingembre, tisanes chaudes, bonne hydratation"]},
+{id:"fol",n:"Folliculaire",c:"var(--fol)",en:"Énergie en hausse : bon moment pour démarrer.",
+ sport:["Course, cardio, vélo","HIIT et circuits","Nouvelle activité ou cours collectif","Renforcement avec charges progressives"],
+ food:["Légumes croquants et crucifères : brocoli, chou","Œufs, poisson, légumineuses (protéines)","Aliments fermentés : kéfir, choucroute","Céréales complètes, graines germées"]},
+{id:"ovu",n:"Ovulation",c:"var(--ovu)",en:"Pic d’énergie pour beaucoup de personnes.",
+ sport:["Séances intenses : musculation, spinning, sprints","Sports d’équipe, activités sociales","Échauffement soigné : les articulations sont plus sensibles"],
+ food:["Fruits rouges, légumes colorés (antioxydants)","Fibres : quinoa, avoine, légumes verts","Graines de courge et noix (zinc)","Beaucoup d’eau"]},
+{id:"lut",n:"Lutéale",c:"var(--lut)",en:"Énergie qui baisse, surtout en fin de phase.",
+ sport:["Début : musculation modérée, pilates, vélo","Fin : marche, yoga, natation douce","Réduisez l’intensité si la fatigue s’installe"],
+ food:["Glucides complexes : patate douce, avoine, riz complet","Magnésium : amandes, banane, chocolat noir","Oméga-3 : saumon, sardines, noix","Limitez sel et excès de caféine (ballonnements, irritabilité)"]}
+];
+const GOALS={run:"Course à pied",force:"Musculation",yoga:"Yoga / pilates",gen:"Forme générale"};
+const DIETS={omni:"Je mange de tout",veg:"Végétarien",vegan:"Végétalien"};
+const GX={run:["Course : footing très léger de 20 min, seulement si vous vous sentez bien.","Course : bon moment pour les fractionnés et la sortie longue.","Course : séance rapide ou test, échauffement soigné.","Course : allure facile, endurance fondamentale."],
+force:["Musculation : séance courte à charges légères, ou mobilité.","Musculation : montez progressivement les charges.","Musculation : essayez vos charges lourdes, échauffement soigné.","Musculation : charges modérées, plus de répétitions, repos plus longs."],
+yoga:["Yoga : postures restauratrices et respiration.","Yoga : enchaînements dynamiques (vinyasa).","Yoga : séances toniques, équilibres.","Yoga : yin, étirements, pilates doux."]};
+const DX={veg:["Version végétarienne : œufs, lentilles, tofu, avec un agrume pour absorber le fer.","Version végétarienne : œufs, yaourt ou kéfir, légumineuses.","Version végétarienne : quinoa, œufs, fruits rouges, noix.","Version végétarienne : avoine, patate douce, graines de lin, œufs."],
+vegan:["Version végétale : lentilles, tofu, graines de courge, avec de la vitamine C. Pensez à la B12.","Version végétale : tempeh, pois chiches, graines germées, légumes fermentés.","Version végétale : quinoa, fruits rouges, noix, graines.","Version végétale : avoine, patate douce, graines de lin et de chia, amandes."]};
+const MEALS=[
+[{n:"Dahl de lentilles corail",v:"vegan",i:["200 g de lentilles corail","200 ml de lait de coco","200 g de tomates concassées","1 oignon et 2 gousses d’ail","1 morceau de gingembre frais","1 c. à c. de curcuma","100 g d’épinards","1 citron"],t:"Faire revenir oignon, ail et gingembre, ajouter curcuma, lentilles, tomates, lait de coco et 200 ml d’eau. Cuire 20 min, finir avec les épinards et le citron."},
+{n:"Soupe de patate douce au gingembre",v:"vegan",i:["400 g de patate douce","1 oignon","3 cm de gingembre","600 ml de bouillon de légumes","100 ml de lait de coco","2 c. à s. de graines de courge"],t:"Cuire patate, oignon et gingembre dans le bouillon 20 min, mixer avec le lait de coco, servir avec les graines."},
+{n:"Shakshuka aux épinards",v:"veg",i:["4 œufs","400 g de tomates concassées","1 poivron","1 oignon","100 g d’épinards","1 c. à c. de cumin","1 c. à c. de paprika","Pain complet"],t:"Mijoter oignon, poivron, tomates et épices 10 min, ajouter les épinards, casser les œufs dessus et cuire à couvert 5 min."},
+{n:"Bœuf mijoté aux carottes",v:"omni",i:["300 g de bœuf à braiser","3 carottes","1 oignon","1 c. à s. de concentré de tomate","300 ml de bouillon","Thym","150 g de riz","1 orange"],t:"Saisir la viande, ajouter légumes, concentré, bouillon et thym. Mijoter 1 h 30. Servir avec le riz et un jus d’orange en dessert ou en boisson."}],
+[{n:"Bowl brocoli, pois chiches et quinoa",v:"vegan",i:["150 g de quinoa","200 g de pois chiches cuits","250 g de brocoli","1 avocat","Graines germées","1 c. à s. de tahini","1 citron","Huile d’olive"],t:"Cuire quinoa et brocoli, assembler avec pois chiches et avocat, assaisonner avec tahini, citron et huile."},
+{n:"Salade croquante de chou rouge",v:"vegan",i:["¼ de chou rouge","2 carottes","1 pomme","100 g de choucroute crue","30 g de noix","1 c. à s. de vinaigre de cidre","2 c. à s. d’huile de colza"],t:"Émincer chou, carottes et pomme, mélanger avec la choucroute, les noix et la vinaigrette."},
+{n:"Omelette aux herbes et courgette",v:"veg",i:["4 œufs","1 courgette","Ciboulette et persil","200 ml de kéfir nature","Pain complet","Huile d’olive"],t:"Faire sauter la courgette râpée, verser les œufs battus avec les herbes, cuire 5 min. Servir avec le kéfir."},
+{n:"Saumon, brocoli et riz complet",v:"omni",i:["2 pavés de saumon","300 g de brocoli","150 g de riz complet","1 c. à s. de sauce soja","1 citron","Gingembre frais"],t:"Cuire le riz, rôtir le saumon 12 min à 180 °C avec soja et gingembre, cuire le brocoli à la vapeur, finir au citron."}],
+[{n:"Buddha bowl arc-en-ciel",v:"vegan",i:["120 g de quinoa","1 betterave cuite","2 carottes","¼ de chou rouge","100 g d’edamame","2 c. à s. de graines de courge","1 c. à s. de tahini","1 citron"],t:"Cuire le quinoa, râper ou couper les légumes, disposer dans un bol et napper d’une sauce tahini-citron allongée d’eau."},
+{n:"Tartines œuf et avocat",v:"veg",i:["4 tranches de pain complet","1 avocat","2 œufs","Tomates cerises","Graines de sésame","1 citron"],t:"Écraser l’avocat avec le citron, tartiner, ajouter les œufs (mollets ou au plat), les tomates et le sésame."},
+{n:"Poulet, légumes grillés et quinoa",v:"omni",i:["250 g de blanc de poulet","1 courgette","1 poivron","1 aubergine","120 g de quinoa","Thym, citron, huile d’olive"],t:"Rôtir poulet et légumes 25 min à 200 °C avec thym et huile, servir sur le quinoa avec un filet de citron."}],
+[{n:"Curry de pois chiches et patate douce",v:"vegan",i:["400 g de patate douce","240 g de pois chiches cuits","200 ml de lait de coco","1 oignon et 2 gousses d’ail","1 c. à s. de pâte de curry","100 g d’épinards","150 g de riz complet"],t:"Faire revenir oignon, ail et curry, ajouter patate en dés, pois chiches et lait de coco. Cuire 20 min, ajouter les épinards, servir sur le riz."},
+{n:"Frittata patate douce et épinards",v:"veg",i:["5 œufs","250 g de patate douce","100 g d’épinards","1 oignon","50 g de fromage de chèvre","Huile d’olive"],t:"Faire dorer patate et oignon en petits dés, ajouter épinards, verser les œufs battus, parsemer de chèvre et cuire 10 min à couvert."},
+{n:"Saumon rôti, patate douce et haricots verts",v:"omni",i:["2 pavés de saumon","400 g de patate douce","250 g de haricots verts","1 citron","Huile d’olive","Aneth ou herbes au choix"],t:"Rôtir la patate 25 min à 200 °C, ajouter le saumon 12 min, cuire les haricots verts à la vapeur, finir au citron."}]
+];
+function nav(){const n=C.filter(x=>!x.d).length;return`<div class="nav">${[["suivi","Suivi"],["repas","Repas"],["courses","Courses"+(n?" ("+n+")":"")]].map(([k,v])=>`<button data-p="${k}" aria-current="${page===k?"page":"false"}">${v}</button>`).join("")}</div>`}
+function curPhase(){const L=S.L,R=ranges(L,S.P),cd=((Math.floor((today()-parse(S.start))/dayMs)%L)+L)%L+1,c=R.findIndex(r=>cd>=r[0]&&cd<=r[1]);return c<0?3:c}
+function tabsHtml(cur){return`<div class="tabs" role="tablist">${PH.map((q,i)=>`<button role="tab" aria-selected="${i===sel}" data-i="${i}" style="${i===sel?"background:"+q.c:""}">${q.n}${i===cur?"<br>(en cours)":""}</button>`).join("")}</div>`}
+const U1="pour 1 personne";
+const PDJ=[
+[{n:"Porridge chaud pomme-cannelle",v:"vegan",p:U1,i:["60 g de flocons d’avoine","250 ml de lait végétal","1 pomme","1 c. à c. de cannelle","20 g d’amandes","1 c. à c. de sirop d’érable"],t:"Chauffer avoine, lait et cannelle 5 min, garnir de pomme en dés, d’amandes et de sirop."},
+{n:"Tartines beurre de cacahuète et kiwi",v:"vegan",p:U1,i:["2 tranches de pain complet","1 c. à s. de beurre de cacahuète","1 kiwi","1 c. à c. de graines de courge"],t:"Tartiner le pain, ajouter le kiwi en rondelles et les graines."},
+{n:"Œufs brouillés aux épinards",v:"veg",p:U1,i:["2 œufs","50 g d’épinards","1 tranche de pain complet","1 c. à c. d’huile d’olive"],t:"Faire tomber les épinards à l’huile, ajouter les œufs battus et remuer 2 min. Servir avec le pain."}],
+[{n:"Bowl yaourt végétal, fruits et graines",v:"vegan",p:U1,i:["150 g de yaourt de soja nature","100 g de fruits frais","1 c. à s. de graines de chia","20 g de noix"],t:"Verser le yaourt dans un bol, ajouter les fruits coupés, le chia et les noix."},
+{n:"Smoothie vert banane-épinards",v:"vegan",p:U1,i:["1 banane","50 g d’épinards","250 ml de lait végétal","1 c. à s. de beurre d’amande","1 c. à c. de graines de lin"],t:"Tout mixer 1 minute jusqu’à obtenir une texture lisse."},
+{n:"Omelette aux herbes et fromage frais",v:"veg",p:U1,i:["2 œufs","Ciboulette","30 g de fromage frais","1 tranche de pain complet"],t:"Battre les œufs avec la ciboulette, cuire à la poêle, garnir de fromage frais et plier. Servir avec le pain."}],
+[{n:"Porridge froid aux fruits rouges",v:"vegan",p:U1,i:["80 g de flocons d’avoine","250 ml de lait végétal","150 g de fruits rouges","1 c. à s. de graines de chia","20 g de noix","1 c. à c. de sirop d’érable"],t:"Mélanger avoine, lait et chia la veille, laisser au frais. Garnir de fruits, de noix et de sirop."},
+{n:"Tartine avocat et graines",v:"vegan",p:U1,i:["2 tranches de pain complet","½ avocat","1 c. à s. de graines de sésame","½ citron"],t:"Écraser l’avocat avec le citron, tartiner et parsemer de sésame."},
+{n:"Yaourt, fruits rouges et noix",v:"veg",p:U1,i:["150 g de yaourt nature","100 g de fruits rouges","20 g de noix","1 c. à c. de miel"],t:"Verser le yaourt dans un bol, ajouter les fruits, les noix et le miel."}],
+[{n:"Porridge cacao-banane",v:"vegan",p:U1,i:["80 g de flocons d’avoine","300 ml de lait végétal","1 banane","1 c. à s. de cacao non sucré","20 g d’amandes","1 c. à s. de graines de lin"],t:"Chauffer avoine, lait et cacao 5 min, garnir de banane, d’amandes et de graines de lin."},
+{n:"Pancakes banane-avoine",v:"vegan",p:U1,i:["1 banane","60 g de flocons d’avoine","100 ml de lait végétal","1 c. à c. de levure chimique","1 c. à c. de cannelle"],t:"Mixer le tout, cuire de petites galettes 2 min par face à la poêle antiadhésive."},
+{n:"Œufs au plat et patate douce rôtie",v:"veg",p:U1,i:["2 œufs","150 g de patate douce","1 c. à c. d’huile d’olive","1 c. à c. de paprika"],t:"Rôtir la patate en dés 20 min à 200 °C avec l’huile et le paprika, servir avec les œufs au plat."}]
+];
+const GOU=[
+[{n:"Chocolat chaud aux dattes",v:"vegan",p:U1,i:["250 ml de lait végétal","1 c. à s. de cacao non sucré","2 dattes","1 pincée de cannelle"],t:"Chauffer le lait avec le cacao et les dattes dénoyautées, mixer, saupoudrer de cannelle."},
+{n:"Yaourt aux noix et au miel",v:"veg",p:U1,i:["125 g de yaourt nature","20 g de noix","1 c. à c. de miel"],t:"Verser le miel et les noix concassées sur le yaourt."}],
+[{n:"Smoothie fraise-banane",v:"vegan",p:U1,i:["100 g de fraises","1 banane","200 ml de lait végétal"],t:"Mixer tous les ingrédients jusqu’à obtenir une texture lisse."},
+{n:"Fromage blanc et fruits frais",v:"veg",p:U1,i:["150 g de fromage blanc","100 g de fruits frais","1 c. à c. de graines de lin"],t:"Couper les fruits sur le fromage blanc et ajouter les graines."}],
+[{n:"Salade de fruits frais à la menthe",v:"vegan",p:U1,i:["1 orange","150 g de fruits rouges","1 kiwi","Menthe","½ citron"],t:"Couper les fruits en morceaux, arroser de citron et ajouter la menthe ciselée."},
+{n:"Yaourt, flocons d’avoine et fruits rouges",v:"veg",p:U1,i:["150 g de yaourt nature","30 g de flocons d’avoine","100 g de fruits rouges","1 c. à c. de miel"],t:"Mélanger le yaourt et l’avoine, garnir de fruits et de miel."}],
+[{n:"Energy balls cacao-dattes",v:"vegan",p:"environ 8 boules",i:["100 g de dattes","50 g d’amandes","20 g de flocons d’avoine","1 c. à s. de cacao non sucré"],t:"Mixer le tout, former des boules et garder au frais."},
+{n:"Yaourt cacao-banane",v:"veg",p:U1,i:["150 g de yaourt nature","1 banane","1 c. à c. de cacao non sucré"],t:"Écraser la banane, la mélanger au yaourt et saupoudrer de cacao."}]
+];
+const SNK=[
+[{n:"Chocolat noir et amandes",v:"vegan",p:U1,i:["20 g de chocolat noir","20 g d’amandes"],t:"Choisissez un chocolat noir à 70 % de cacao minimum."},
+{n:"Houmous et bâtonnets de carotte",v:"vegan",p:U1,i:["3 c. à s. de houmous","1 carotte"],t:"Couper la carotte en bâtonnets et tremper dans le houmous."}],
+[{n:"Edamame salés",v:"vegan",p:U1,i:["100 g d’edamame","Sel"],t:"Cuire 5 min à l’eau bouillante, égoutter et saler."},
+{n:"Œuf dur et crudités",v:"veg",p:U1,i:["1 œuf","1 carotte","5 tomates cerises"],t:"Cuire l’œuf 10 min à l’eau bouillante, servir avec les crudités."}],
+[{n:"Pois chiches grillés",v:"vegan",p:U1,i:["120 g de pois chiches cuits","1 c. à c. d’huile d’olive","1 c. à c. de paprika"],t:"Rôtir 25 min à 200 °C en remuant à mi-cuisson."},
+{n:"Fruits rouges et noix",v:"vegan",p:U1,i:["100 g de fruits rouges","20 g de noix"],t:"Mélanger et croquer."}],
+[{n:"Banane et beurre d’amande",v:"vegan",p:U1,i:["1 banane","1 c. à s. de beurre d’amande"],t:"Couper la banane en rondelles et tartiner de beurre d’amande."},
+{n:"Mélange graines de courge et raisins secs",v:"vegan",p:U1,i:["20 g de graines de courge","20 g de raisins secs","10 g d’amandes"],t:"Mélanger et grignoter."}]
+];
+const CATS=["Midi et soir","Petit-déjeuner","Goûter","Snack"];
+const CATN=["repas du midi et du soir","petit-déjeuner","goûter","snack"];
+const DISH=[MEALS,PDJ,GOU,SNK];
+const LAB={vegan:"Végétal",veg:"Végétarien",omni:"Avec viande ou poisson"};
+function dish(m,key,custom){
+ return`<section class="dish" style="--c:${PH[sel].c}"><h2>${esc(m.n)}</h2><p class="tag">${custom?"Ma recette · "+LAB[m.v]:LAB[m.v]+" · "+(m.p||"pour 2 personnes")}</p><h3>Ingrédients</h3><ul>${m.i.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>${m.t?`<h3>Préparation</h3><p>${esc(m.t).replace(/\n/g,"<br>")}</p>`:""}
+ <div class="row"><button class="btn" data-add="${key}">${flash===key?"Ajouté à la liste ✓":"Ajouter à ma liste de courses"}</button><button class="btn" ${custom?`data-del="${m.id}"`:`data-hide="${key}"`}>Retirer</button></div></section>`}
+function mealForm(){return`<form id="rf" class="log"><h2>Nouvelle recette</h2>
+ <label for="rn">Nom</label><input id="rn" required maxlength="80">
+ <label for="rp">Phase du cycle</label><select id="rp">${PH.map((q,i)=>`<option value="${i}"${i===sel?" selected":""}>${q.n}</option>`).join("")}</select>
+ <label for="rk">Repas</label><select id="rk">${CATS.map((c,i)=>`<option value="${i}"${i===cat?" selected":""}>${c}</option>`).join("")}</select>
+ <label for="rv">Régime</label><select id="rv">${Object.entries(LAB).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select>
+ <label for="ri">Ingrédients (un par ligne)</label><textarea id="ri" rows="5" required></textarea>
+ <label for="rt">Préparation (facultatif)</label><textarea id="rt" rows="4"></textarea>
+ <button class="btn main" type="submit">Enregistrer la recette</button><button class="btn" type="button" id="rc">Annuler</button></form>`}
+function meals(){
+ const cur=curPhase();if(sel===null)sel=cur;
+ const ok={omni:["vegan","veg","omni"],veg:["vegan","veg"],vegan:["vegan"]}[S.diet||"omni"];
+ const built=DISH[cat][sel].map((m,i)=>[m,i]).filter(([m])=>ok.includes(m.v)&&!H.includes(cat+"|"+sel+"|"+m.n)).map(([m,i])=>dish(m,"b"+cat+"-"+sel+"-"+i,false));
+ const mine=R.filter(r=>r.ph===sel&&(r.c||0)===cat).map(r=>dish(r,"c"+r.id,true));
+ return`<h1>Mon cycle</h1>${nav()}
+ <div class="chips" role="group" aria-label="Type de repas">${CATS.map((c,i)=>`<button type="button" class="chip" aria-pressed="${i===cat}" data-cat="${i}">${c}</button>`).join("")}</div>
+ ${tabsHtml(cur)}
+ <p class="sub">Idées de ${CATN[cat]} pour la phase « ${PH[sel].n} », selon votre alimentation. Quantités indicatives, précisées sur chaque fiche. Vos propres recettes apparaissent en premier.</p>
+ ${adding?mealForm():`<button class="btn" id="radd">Ajouter ma propre recette</button>`}
+ <div style="height:14px"></div>${mine.join("")}${built.join("")}${mine.length||built.length?"":`<p class="sub">Aucune idée ici (selon votre régime ou les recettes retirées). Ajoutez la vôtre.</p>`}
+ ${H.length?`<button class="btn" id="hrs">Rétablir les recettes retirées (${H.length})</button>`:""}`}
+function bindMeals(a){
+ a.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>{const k=b.dataset.add;let arr=[];
+  if(k[0]==="b"){const[c,p,i]=k.slice(1).split("-");arr=DISH[+c][+p][+i].i}else{const r=R.find(x=>x.id===k.slice(1));if(r)arr=r.i}
+  addToList(arr);flash=k;render()});
+ a.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{if(confirm("Supprimer cette recette ?")){R=R.filter(x=>x.id!==b.dataset.del);saveR();render()}});
+ a.querySelectorAll("[data-hide]").forEach(b=>b.onclick=()=>{if(confirm("Retirer cette recette ? Vous pourrez la rétablir.")){const[c,p,i]=b.dataset.hide.slice(1).split("-");H.push(c+"|"+p+"|"+DISH[+c][+p][+i].n);saveH();render()}});
+ const hr=a.querySelector("#hrs");if(hr)hr.onclick=()=>{H=[];saveH();render()};
+ a.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{cat=+b.dataset.cat;flash=null;render()});
+ const add=a.querySelector("#radd");if(add)add.onclick=()=>{adding=true;render()};
+ const f=a.querySelector("#rf");if(f){
+  a.querySelector("#rc").onclick=()=>{adding=false;render()};
+  f.onsubmit=e=>{e.preventDefault();
+   const ing=a.querySelector("#ri").value.split("\n").map(x=>x.trim()).filter(Boolean).slice(0,40);
+   const n=a.querySelector("#rn").value.trim();if(!ing.length||!n)return;
+   const ph=+a.querySelector("#rp").value;
+   R.push({id:uid(),n,ph,c:+a.querySelector("#rk").value,v:a.querySelector("#rv").value,i:ing,t:a.querySelector("#rt").value.trim()});
+   saveR();sel=ph;cat=+a.querySelector("#rk").value;adding=false;render()}}}
+function shop(){
+ const open=C.filter(x=>!x.d),done=C.filter(x=>x.d);
+ return`<h1>Mon cycle</h1>${nav()}
+ <form id="cf" class="addrow"><input id="ci" placeholder="Ajouter un article" aria-label="Ajouter un article" maxlength="80"><button class="btn main" type="submit">Ajouter</button></form>
+ ${C.length?`<ul class="shop">${open.concat(done).map(x=>`<li class="${x.d?"done":""}"><label><input type="checkbox" data-c="${x.id}"${x.d?" checked":""}><span>${esc(itemText(x))}</span></label><button class="x" data-r="${x.id}" aria-label="Retirer ${esc(itemText(x))}">×</button></li>`).join("")}</ul>
+ <button class="btn" id="cd">Retirer les articles cochés</button><button class="btn" id="ca">Vider la liste</button>`:`<p class="sub">Votre liste est vide. Les quantités identiques s’additionnent automatiquement. Ajoutez des articles ici ou touchez « Ajouter à ma liste de courses » sur un plat de l’onglet Repas.</p>`}`}
+function bindShop(a){
+ a.querySelector("#cf").onsubmit=e=>{e.preventDefault();const v=a.querySelector("#ci").value.trim();if(v){addParsed(C,v,false);saveC()}render();const i=document.getElementById("ci");if(i)i.focus()};
+ a.querySelectorAll("[data-c]").forEach(b=>b.onchange=()=>{const x=C.find(y=>y.id===b.dataset.c);if(x){x.d=b.checked;saveC();render()}});
+ a.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{C=C.filter(y=>y.id!==b.dataset.r);saveC();render()});
+ const cd=a.querySelector("#cd");if(cd){cd.onclick=()=>{C=C.filter(y=>!y.d);saveC();render()};a.querySelector("#ca").onclick=()=>{if(confirm("Vider toute la liste ?")){C=[];saveC();render()}}}}
+const MOODS=["Basse","Neutre","Bonne"];
+const SYMS=["Crampes","Fatigue","Ballonnements","Maux de tête","Envies sucrées","Irritabilité","Seins sensibles","Sommeil agité"];
+let S=null,sel=null,editing=false,J={},curPh=0,page="suivi",R=[],C=[],flash=null,adding=false,cat=0,H=[];
+try{S=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
+try{J=JSON.parse(localStorage.getItem(KEY+"-j")||"{}")||{}}catch(e){J={}}
+function saveJ(){try{localStorage.setItem(KEY+"-j",JSON.stringify(J))}catch(e){}}
+try{R=JSON.parse(localStorage.getItem(KEY+"-r")||"[]");if(!Array.isArray(R))R=[]}catch(e){R=[]}
+try{C=JSON.parse(localStorage.getItem(KEY+"-c")||"[]");if(!Array.isArray(C))C=[]}catch(e){C=[]}
+C=migrate(C);
+function saveR(){try{localStorage.setItem(KEY+"-r",JSON.stringify(R))}catch(e){}}
+function saveC(){try{localStorage.setItem(KEY+"-c",JSON.stringify(C))}catch(e){}}
+try{H=JSON.parse(localStorage.getItem(KEY+"-h")||"[]");if(!Array.isArray(H))H=[]}catch(e){H=[]}
+function saveH(){try{localStorage.setItem(KEY+"-h",JSON.stringify(H))}catch(e){}}
+function uid(){return Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36)}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]))}
+/*SHOP-START*/
+function splitItems(t){return t.split(/\s*[;\n]\s*|\s*,(?!\d)\s*|\s+et\s+/i).map(x=>x.trim()).filter(Boolean)}
+function parseItem(raw){
+ let t=raw.trim().replace(/\s+/g," ");if(!t)return null;
+ let q=null,u="";
+ const m=t.match(/^(\d+\/\d+|\d+(?:[.,]\d+)?|[¼½¾])\s*/);
+ if(m){const s=m[1];
+  q=s==="¼"?.25:s==="½"?.5:s==="¾"?.75:s.includes("/")?(+s.split("/")[0])/(+s.split("/")[1]):parseFloat(s.replace(",","."));
+  t=t.slice(m[0].length);
+  const um=t.match(/^(c\. à s\.|c\. à c\.|kg|g|ml|cl|l|cm|gousses?|tranches?|pavés?|morceaux?|boîtes?|pincées?|brins?|bottes?)\s+/i);
+  if(um){u=um[1].toLowerCase();t=t.slice(um[0].length);
+   if(/^(gousse|tranche|pavé|morceau|boîte|pincée|brin|botte)s$/.test(u))u=u.slice(0,-1);
+   if(u==="kg"){u="g";q*=1000}else if(u==="l"){u="ml";q*=1000}else if(u==="cl"){u="ml";q*=10}}}
+ t=t.replace(/^(de la |de l’|de l'|de |d’|d'|du |des )/i,"").trim();
+ if(!t)return null;
+ const k=t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/œ/g,"oe").split(" ").map(w=>w.length>3?w.replace(/[sx]$/,""):w).join(" ");
+ return{n:t,k,q,u}}
+function addParsed(list,text,done){const dn=!!done;
+ splitItems(text).forEach(p=>{const it=parseItem(p);if(!it)return;
+  const m=list.find(e=>e.d===dn&&e.k===it.k&&(e.q==null||it.q==null||e.u===it.u));
+  if(m){if(it.q!=null){if(m.q==null){m.q=it.q;m.u=it.u}else m.q+=it.q}}
+  else list.push({id:uid(),n:it.n,k:it.k,q:it.q,u:it.u,d:dn})})}
+function fmtQ(q){const r=Math.round(q*100)/100,w=Math.floor(r),f=Math.round((r-w)*100)/100,fr={0.25:"¼",0.5:"½",0.75:"¾"}[f];
+ return fr?(w||"")+fr:String(r).replace(".",",")}
+function art(n){return /^([aeiouyéèêâîôûœ]|huile|herbe)/i.test(n)?"d’":"de "}
+function plur(n){return n.split(" ").map(w=>/^(de|du|des|d’|au|aux|à|et|la|le|les)$/i.test(w)||w.length<3||/[sxz]$/i.test(w)?w:w+"s").join(" ")}
+function itemText(x){
+ if(x.q==null)return x.n.charAt(0).toUpperCase()+x.n.slice(1);
+ let q=x.q,u=x.u;const nm=x.n.charAt(0).toLowerCase()+x.n.slice(1);
+ if(!u)return fmtQ(q)+" "+(q>1?plur(nm):nm);
+ if(u==="g"&&q>=1000){q/=1000;u="kg"}else if(u==="ml"&&q>=1000){q/=1000;u="l"}
+ if(q>1&&/^(gousse|tranche|pavé|morceau|boîte|pincée|brin|botte)$/.test(u))u+="s";
+ return fmtQ(q)+" "+u+" "+art(nm)+nm}
+function migrate(arr){const out=[];arr.forEach(x=>{if(!x)return;if(x.k!==undefined){x.d=!!x.d;out.push(x)}else if(x.t)addParsed(out,x.t,x.d)});return out}
+function addToList(arr){arr.forEach(t=>addParsed(C,t,false));saveC()}
+/*SHOP-END*/
+function chips(list,on,attr){return list.map(x=>`<button type="button" class="chip" aria-pressed="${on(x)}" data-${attr}="${x}">${x}</button>`).join("")}
+function jr(cur){curPh=cur;
+ const k=iso(today()),x=J[k]||{s:[]};
+ const keys=Object.keys(J).sort().reverse().slice(0,7);
+ const avg=PH.map((q,i)=>{const v=Object.values(J).filter(o=>o.ph===i&&o.e).map(o=>o.e);return v.length>=2?q.n+" "+(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1)+"/5":null}).filter(Boolean);
+ return`<section class="log"><h2>Journal du jour</h2>
+ <h3>Énergie</h3><div class="chips">${chips([1,2,3,4,5],n=>x.e===n,"e")}</div>
+ <h3>Humeur</h3><div class="chips">${chips(MOODS,m=>x.m===m,"m")}</div>
+ <h3>Symptômes</h3><div class="chips">${chips(SYMS,s=>(x.s||[]).includes(s),"s")}</div>
+ ${avg.length?`<p class="sub">Votre énergie moyenne par phase : ${avg.join(", ")}.</p>`:""}
+ ${keys.length?`<ul class="hist">${keys.map(d=>{const o=J[d];return`<li>${fmt(parse(d))} : ${o.ph!==undefined?PH[o.ph].n:""}${o.e?", énergie "+o.e+"/5":""}${o.m?", humeur "+o.m.toLowerCase():""}${(o.s||[]).length?", "+o.s.join(", ").toLowerCase():""}</li>`}).join("")}</ul>`:`<p class="sub">Notez votre journée : les moyennes par phase apparaîtront après quelques entrées.</p>`}</section>`}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const dayMs=864e5;
+function parse(s){const[a,b,c]=s.split("-").map(Number);return new Date(a,b-1,c)}
+function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function today(){const d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate())}
+function ranges(L,P){let ov=Math.max(L-14,P+3);const a=ov-1,b=ov+1;
+ return[[1,P],[P+1,a-1],[a,b],[b+1,L]]}
+function polar(r,deg){const t=(deg-90)*Math.PI/180;return[110+r*Math.cos(t),110+r*Math.sin(t)]}
+function arc(s,e,L){const a0=(s-1)/L*360+1.5,a1=e/L*360-1.5,[x0,y0]=polar(88,a0),[x1,y1]=polar(88,a1);
+ return`M${x0} ${y0}A88 88 0 ${a1-a0>180?1:0} 1 ${x1} ${y1}`}
+function fmt(d){return d.toLocaleDateString("fr-FR",{day:"numeric",month:"long"})}
+function form(){
+ const t=iso(today());
+ return`<h1>Mon cycle</h1><form id="f"><p>Renseignez ces trois informations. Elles restent sur votre téléphone.</p>
+ <label for="s">Premier jour des dernières règles</label><input id="s" type="date" required max="${t}" value="${S?S.start:t}">
+ <label for="l">Durée du cycle (jours)</label><input id="l" type="number" min="21" max="40" required value="${S?S.L:28}">
+ <label for="p">Durée des règles (jours)</label><input id="p" type="number" min="2" max="8" required value="${S?S.P:5}">
+ <label for="g">Votre sport principal</label><select id="g">${Object.entries(GOALS).map(([k,v])=>`<option value="${k}"${(S&&S.goal||"gen")===k?" selected":""}>${v}</option>`).join("")}</select>
+ <label for="d">Alimentation</label><select id="d">${Object.entries(DIETS).map(([k,v])=>`<option value="${k}"${(S&&S.diet||"omni")===k?" selected":""}>${v}</option>`).join("")}</select>
+ <button class="btn main" type="submit">Enregistrer</button></form>`}
+function view(){
+ if(page==="repas")return meals();
+ if(page==="courses")return shop();
+ const L=S.L,P=S.P,R=ranges(L,P),t=today();
+ const diff=Math.floor((t-parse(S.start))/dayMs);
+ const cd=((diff%L)+L)%L+1;
+ let cur=R.findIndex(r=>cd>=r[0]&&cd<=r[1]);if(cur<0)cur=3;
+ if(sel===null)sel=cur;
+ const next=new Date(t.getTime()+(L-cd+1)*dayMs);
+ const [mx,my]=polar(88,(cd-.5)/L*360);
+ const p=PH[sel];
+ return`<h1>Mon cycle</h1>${nav()}
+ <svg class="dial" viewBox="0 0 220 220" role="img" aria-label="Jour ${cd} du cycle, phase ${PH[cur].n}">
+ ${R.map((r,i)=>`<path d="${arc(r[0],r[1],L)}" fill="none" stroke="${PH[i].c}" stroke-width="18" stroke-linecap="round" opacity="${i===cur?1:.35}"/>`).join("")}
+ <circle cx="${mx}" cy="${my}" r="9" fill="var(--bg)" stroke="var(--ink)" stroke-width="3"/>
+ <text x="110" y="108" text-anchor="middle" class="day" fill="var(--ink)" font-size="44" font-weight="800">J${cd}</text>
+ <text x="110" y="132" text-anchor="middle" fill="var(--mute)" font-size="14">${PH[cur].n}</text></svg>
+ <p class="center sub">Prochaines règles prévues vers le ${fmt(next)} (dans ${L-cd+1} j)</p>
+ <div class="tabs" role="tablist">${PH.map((q,i)=>`<button role="tab" aria-selected="${i===sel}" data-i="${i}" style="${i===sel?"background:"+q.c:""}">${q.n}${i===cur?"<br>(en cours)":""}</button>`).join("")}</div>
+ <section class="panel" style="--c:${p.c}"><h2>${p.n}</h2><p>${p.en}</p>
+ <h3>Sport conseillé</h3><ul>${p.sport.map(x=>`<li>${x}</li>`).join("")}</ul>
+ <h3>À mettre dans l’assiette</h3><ul>${p.food.map(x=>`<li>${x}</li>`).join("")}</ul>
+ ${GX[S.goal]?`<div class="extra">${GX[S.goal][sel]}</div>`:""}
+ ${DX[S.diet]?`<div class="extra">${DX[S.diet][sel]}</div>`:""}</section>
+ ${jr(cur)}
+ <button class="btn main" id="new">Mes règles ont commencé aujourd’hui</button>
+ <button class="btn" id="edit">Modifier mes réglages</button>
+ <button class="btn" id="exp">Exporter ma sauvegarde</button>
+ <button class="btn" id="impb">Importer une sauvegarde</button><input id="imp" type="file" accept="application/json,.json" hidden>
+ <p class="note">Les phases sont estimées à partir de vos dates : l’ovulation est supposée environ 14 jours avant les règles suivantes. Les effets du cycle sur la performance et l’appétit varient beaucoup d’une personne à l’autre, et les preuves scientifiques restent limitées. Ces conseils sont indicatifs et ne remplacent pas un avis médical, surtout si vos cycles sont irréguliers ou douloureux.</p>`}
+function render(){
+ const a=document.getElementById("app");
+ if(!S||editing){a.innerHTML=form();
+  document.getElementById("f").onsubmit=e=>{e.preventDefault();
+   S={start:document.getElementById("s").value,L:+document.getElementById("l").value,P:+document.getElementById("p").value,goal:document.getElementById("g").value,diet:document.getElementById("d").value};
+   save();editing=false;sel=null;render()};return}
+ a.innerHTML=view();
+ a.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{sel=+b.dataset.i;flash=null;render()});
+ a.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{page=b.dataset.p;sel=null;flash=null;adding=false;render();window.scrollTo(0,0)});
+ if(page==="repas")return bindMeals(a);
+ if(page==="courses")return bindShop(a);
+ document.getElementById("new").onclick=()=>{S.start=iso(today());save();sel=null;render()};
+ document.getElementById("edit").onclick=()=>{editing=true;render()};
+ document.getElementById("exp").onclick=()=>{const b=new Blob([JSON.stringify({S,J,R,C,H})],{type:"application/json"}),u=URL.createObjectURL(b),l=document.createElement("a");l.href=u;l.download="mon-cycle-sauvegarde.json";l.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
+ document.getElementById("impb").onclick=()=>document.getElementById("imp").click();
+ document.getElementById("imp").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.S&&d.S.start){S=d.S;J=d.J||{};R=Array.isArray(d.R)?d.R:[];C=migrate(Array.isArray(d.C)?d.C:[]);H=Array.isArray(d.H)?d.H:[];save();saveJ();saveR();saveC();saveH();sel=null;render()}else alert("Fichier non reconnu.")}catch(x){alert("Fichier non reconnu.")}};r.readAsText(f)};
+ const ent=()=>{const k=iso(today());const x=J[k]||(J[k]={s:[]});x.ph=curPh;return x};
+ a.querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>{const x=ent();x.e=x.e===+b.dataset.e?undefined:+b.dataset.e;saveJ();render()});
+ a.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{const x=ent();x.m=x.m===b.dataset.m?undefined:b.dataset.m;saveJ();render()});
+ a.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>{const x=ent(),v=b.dataset.s;x.s=x.s.includes(v)?x.s.filter(y=>y!==v):x.s.concat(v);saveJ();render()});
+}
+render();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
